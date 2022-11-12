@@ -14,7 +14,7 @@ import com.example.oficinarrhhservice.model.JustificativoModel;
 @Service
 public class OficinaRrhhService{
 
-    public double calcularSueldoFijoMensual(EmpleadoModel empleado){
+    /*public double calcularSueldoFijoMensual(EmpleadoModel empleado){
 
         double sueldoFijoMensual = 0;
 
@@ -77,7 +77,7 @@ public class OficinaRrhhService{
 
 
         return pagoHorasExtras;
-    }
+    }*/
 
     public double calcularDescuentoPorAtraso(double sueldoFijoMensual, List<Integer> atrasos){
 
@@ -88,7 +88,7 @@ public class OficinaRrhhService{
         return descuentoPorAtraso;
     }
 
-    public double calcularDescuentoPorInasistencia(double sueldoFijoMensual, List<JustificativoModel> justificativos, EmpleadoModel empleado){
+    /*public double calcularDescuentoPorInasistencia(double sueldoFijoMensual, List<JustificativoModel> justificativos, EmpleadoModel empleado){
 
         double descuentoPorInasistencia = 0;
 
@@ -105,6 +105,6 @@ public class OficinaRrhhService{
         descuentoPorInasistencia = cont*sueldoFijoMensual*0.15;
 
         return descuentoPorInasistencia;
-    }
+    }*/
 
 }
