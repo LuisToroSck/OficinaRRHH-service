@@ -10,4 +10,16 @@ public class EmpleadoModel {
     private Date fechaIngreso;
     private String categoria;
     private Date fechaNacimiento;
+
+    public String getCategoria(){
+        return categoria;
+    }
+
+    public String getRutEmpleado(){
+        return rutEmpleado;
+    }
+
+    public Date getFechaIngreso(){
+        return fechaIngreso;
+    }
 }

@@ -6,22 +6,34 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import com.example.oficinarrhhservice.model.AutorizacionModel;
-import com.example.oficinarrhhservice.model.EmpleadoModel;
-import com.example.oficinarrhhservice.model.JustificativoModel;
+import com.example.oficinarrhhservice.model.*;
 
 @Service
 public class OficinaRrhhService{
 
-    /*public double calcularSueldoFijoMensual(EmpleadoModel empleado){
+    RestTemplate restTemplate = new RestTemplate();
+
+    public double calcularSueldoFijoMensual(String rutEmpleado){
+
+
+        EmpleadoModel[] empleados = getEmpleados();
+        int i = 0;
+        String cat = new String();
+        while (i < empleados.length){
+            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+                cat = empleados[i].getCategoria(); 
+            }
+            i++;
+        }
 
         double sueldoFijoMensual = 0;
 
-        if(empleado.getCategoria().equals("A")){
+        if(cat.equals("A")){
             sueldoFijoMensual = 1700000;
         }
-        else if(empleado.getCategoria().equals("B")){
+        else if(cat.equals("B")){
             sueldoFijoMensual = 1200000;
         }
         else{
@@ -31,11 +43,21 @@ public class OficinaRrhhService{
         return sueldoFijoMensual;
     }
 
-    public double calcularBonificacionPorAniosServicio(EmpleadoModel empleado, double sueldoFijoMensual){
+    public double calcularBonificacionPorAniosServicio(String rutEmpleado){
+
+        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
+
+        LocalDate localDate = LocalDate.now();
+        EmpleadoModel[] empleados = getEmpleados();
+        int i = 0;
+        while(i < empleados.length){
+            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+                localDate = empleados[i].getFechaIngreso().toLocalDate();
+            }
+            i = i + 1;
+        }
 
         double bonificacionPorServicio = 0;
-
-        LocalDate localDate = empleado.getFechaIngreso().toLocalDate();
 
         int anioIngreso = localDate.getYear();
         int anioActual  = LocalDateTime.now().getYear();
@@ -53,7 +75,7 @@ public class OficinaRrhhService{
         return Double.parseDouble(bonifStr);
     }
 
-    public double calcularPagoHorasExtras(EmpleadoModel empleado, List<AutorizacionModel> autorizaciones){
+    /*public double calcularPagoHorasExtras(EmpleadoModel empleado, List<AutorizacionModel> autorizaciones){
 
         AutorizacionService autorizacionService = new AutorizacionService();
 
@@ -106,5 +128,11 @@ public class OficinaRrhhService{
 
         return descuentoPorInasistencia;
     }*/
+
+
+    public EmpleadoModel[] getEmpleados(){
+        EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8002/empleado", EmpleadoModel[].class);
+        return empleados;
+    }
 
 }
