@@ -7,4 +7,16 @@ public class AutorizacionModel {
     private Date fecha;
     private int cantidadHorasExtras;
     private int autorizado;
+
+    public String getRutEmpleado(){
+        return rutEmpleado;
+    }
+
+    public int getAutorizado(){
+        return autorizado;
+    }
+
+    public int getCantidadHorasExtras(){
+        return cantidadHorasExtras;
+    }
 }

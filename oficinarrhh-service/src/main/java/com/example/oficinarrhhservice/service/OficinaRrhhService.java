@@ -75,22 +75,32 @@ public class OficinaRrhhService{
         return Double.parseDouble(bonifStr);
     }
 
-    /*public double calcularPagoHorasExtras(EmpleadoModel empleado, List<AutorizacionModel> autorizaciones){
+    public double calcularPagoHorasExtras(String rutEmpleado){
 
-        AutorizacionService autorizacionService = new AutorizacionService();
+        AutorizacionModel[] autorizaciones = getAutorizaciones();
+
+        EmpleadoModel[] empleados = getEmpleados();
+        EmpleadoModel empleado = new EmpleadoModel();
+        int i = 0;
+        while(i<empleados.length){
+            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+                empleado = empleados[i];
+            }
+            i = i + 1;
+        }
 
         double pagoHorasExtras = 0;
 
-        int i=0;
-        while(i<autorizaciones.size()){
-            if(autorizaciones.get(i).getRutEmpleado().equals(empleado.getRutEmpleado())) {
-                if (autorizaciones.get(i).getAutorizado() == 1) {
+        i=0;
+        while(i<autorizaciones.length){
+            if(autorizaciones[i].getRutEmpleado().equals(empleado.getRutEmpleado())) {
+                if (autorizaciones[i].getAutorizado() == 1) {
                     if (empleado.getCategoria().equals("A")) {
-                        pagoHorasExtras = autorizaciones.get(i).getCantidadHorasExtras() * 25000;
+                        pagoHorasExtras = autorizaciones[i].getCantidadHorasExtras() * 25000;
                     } else if (empleado.getCategoria().equals("B")) {
-                        pagoHorasExtras = autorizaciones.get(i).getCantidadHorasExtras() * 20000;
+                        pagoHorasExtras = autorizaciones[i].getCantidadHorasExtras() * 20000;
                     } else {
-                        pagoHorasExtras = autorizaciones.get(i).getCantidadHorasExtras() * 10000;
+                        pagoHorasExtras = autorizaciones[i].getCantidadHorasExtras() * 10000;
                     }
                 }
             }
@@ -99,7 +109,7 @@ public class OficinaRrhhService{
 
 
         return pagoHorasExtras;
-    }*/
+    }
 
     public double calcularDescuentoPorAtraso(double sueldoFijoMensual, List<Integer> atrasos){
 
@@ -133,6 +143,11 @@ public class OficinaRrhhService{
     public EmpleadoModel[] getEmpleados(){
         EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8002/empleado", EmpleadoModel[].class);
         return empleados;
+    }
+
+    public AutorizacionModel[] getAutorizaciones(){
+        AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://localhost:8001/autorizacion", AutorizacionModel[].class);
+        return autorizaciones;
     }
 
 }
