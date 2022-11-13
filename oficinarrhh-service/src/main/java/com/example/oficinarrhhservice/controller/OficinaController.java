@@ -29,5 +29,15 @@ public class OficinaController {
     public double getPagoHorasExtras(@PathVariable String rutEmpleado){
         return oficinaRrhhService.calcularPagoHorasExtras(rutEmpleado);
     }
+
+    @GetMapping("/getDescuentoPorAtrasos/{rutEmpleado}")
+    public double getDescuentoPorAtrasos(@PathVariable String rutEmpleado){
+        return oficinaRrhhService.calcularDescuentoPorAtraso(rutEmpleado);
+    }
+
+    @GetMapping("/getDescuentoPorInasisitencia/{rutEmpleado}")
+    public double getDescuentoPorInasisitencia(@PathVariable String rutEmpleado){
+        return oficinaRrhhService.calcularDescuentoPorInasistencia(rutEmpleado);
+    }
     
 }

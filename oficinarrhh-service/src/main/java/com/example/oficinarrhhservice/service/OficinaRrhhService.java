@@ -111,7 +111,10 @@ public class OficinaRrhhService{
         return pagoHorasExtras;
     }
 
-    public double calcularDescuentoPorAtraso(double sueldoFijoMensual, List<Integer> atrasos){
+    public double calcularDescuentoPorAtraso(String rutEmpleado){
+
+        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
+        List<Integer> atrasos = getAtrasos(rutEmpleado);
 
         double descuentoPorAtraso = 0;
 
@@ -120,15 +123,29 @@ public class OficinaRrhhService{
         return descuentoPorAtraso;
     }
 
-    /*public double calcularDescuentoPorInasistencia(double sueldoFijoMensual, List<JustificativoModel> justificativos, EmpleadoModel empleado){
+    public double calcularDescuentoPorInasistencia(String rutEmpleado){
+        
+        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
+        JustificativoModel[] justificativos = getJustificativos();
+        
+        EmpleadoModel[] empleados = getEmpleados();
+        EmpleadoModel empleado = new EmpleadoModel();
+        int i = 0;
+        while(i<empleados.length){
+            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+                empleado = empleados[i];
+            }
+            i = i + 1;
+        }
+
 
         double descuentoPorInasistencia = 0;
 
         int cont=0;
-        int i=0;
-        while(i< justificativos.size()){
-            if(justificativos.get(i).getRutEmpleado().equals(empleado.getRutEmpleado())){
-                if(justificativos.get(i).getJustificada()==0){
+        i=0;
+        while(i< justificativos.length){
+            if(justificativos[i].getRutEmpleado().equals(empleado.getRutEmpleado())){
+                if(justificativos[i].getJustificada()==0){
                     cont = cont + 1 ;
                 }
             }
@@ -137,7 +154,7 @@ public class OficinaRrhhService{
         descuentoPorInasistencia = cont*sueldoFijoMensual*0.15;
 
         return descuentoPorInasistencia;
-    }*/
+    }
 
 
     public EmpleadoModel[] getEmpleados(){
@@ -148,6 +165,16 @@ public class OficinaRrhhService{
     public AutorizacionModel[] getAutorizaciones(){
         AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://localhost:8001/autorizacion", AutorizacionModel[].class);
         return autorizaciones;
+    }
+
+    public List<Integer> getAtrasos(String rutEmpleado){
+        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8003/oficina/getAtrasos/" + rutEmpleado, List.class);
+        return atrasos;
+    }
+
+    public JustificativoModel[] getJustificativos(){
+        JustificativoModel[] justificativos = restTemplate.getForObject("http://localhost:8004/justificativo", JustificativoModel[].class);
+        return justificativos;
     }
 
 }
