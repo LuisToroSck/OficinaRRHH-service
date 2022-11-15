@@ -1,6 +1,7 @@
 package com.example.oficinarrhhservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,29 +16,29 @@ public class OficinaController {
     @Autowired
     OficinaRrhhService oficinaRrhhService;
 
-    @GetMapping("/getSueldoFijoMensual/{rutEmpleado}")
-    public double getSueldoFijoMensual(@PathVariable String rutEmpleado){
-        return oficinaRrhhService.calcularSueldoFijoMensual(rutEmpleado);
+    @GetMapping("/getSueldoFijoMensual/{id}")
+    public ResponseEntity<Double> getSueldoFijoMensual(@PathVariable Long id){
+        return ResponseEntity.ok(oficinaRrhhService.calcularSueldoFijoMensual(id));
     }
 
-    @GetMapping("/getBonificacionPorAniosServicio/{rutEmpleado}")
-    public double getBonificacionPorAniosServicio(@PathVariable String rutEmpleado){
-        return oficinaRrhhService.calcularBonificacionPorAniosServicio(rutEmpleado);
+    @GetMapping("/getBonificacionPorAniosServicio/{id}")
+    public ResponseEntity<Double> getBonificacionPorAniosServicio(@PathVariable Long id){
+        return ResponseEntity.ok(oficinaRrhhService.calcularBonificacionPorAniosServicio(id));
     }
 
-    @GetMapping("/getPagoHorasExtras/{rutEmpleado}")
-    public double getPagoHorasExtras(@PathVariable String rutEmpleado){
-        return oficinaRrhhService.calcularPagoHorasExtras(rutEmpleado);
+    @GetMapping("/getPagoHorasExtras/{id}")
+    public ResponseEntity<Double> getPagoHorasExtras(@PathVariable Long id){
+        return ResponseEntity.ok(oficinaRrhhService.calcularPagoHorasExtras(id));
     }
 
-    @GetMapping("/getDescuentoPorAtrasos/{rutEmpleado}")
-    public double getDescuentoPorAtrasos(@PathVariable String rutEmpleado){
-        return oficinaRrhhService.calcularDescuentoPorAtraso(rutEmpleado);
+    @GetMapping("/getDescuentoPorAtrasos/{id}")
+    public ResponseEntity<Double> getDescuentoPorAtrasos(@PathVariable Long id){
+        return ResponseEntity.ok(oficinaRrhhService.calcularDescuentoPorAtraso(id));
     }
 
-    @GetMapping("/getDescuentoPorInasisitencia/{rutEmpleado}")
-    public double getDescuentoPorInasisitencia(@PathVariable String rutEmpleado){
-        return oficinaRrhhService.calcularDescuentoPorInasistencia(rutEmpleado);
+    @GetMapping("/getDescuentoPorInasistencia/{id}")
+    public ResponseEntity<Double> getDescuentoPorInasisitencia(@PathVariable Long id){
+        return ResponseEntity.ok(oficinaRrhhService.calcularDescuentoPorInasistencia(id));
     }
     
 }

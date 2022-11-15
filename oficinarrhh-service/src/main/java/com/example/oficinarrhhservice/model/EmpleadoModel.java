@@ -4,6 +4,7 @@ import java.sql.Date;
 
 public class EmpleadoModel {
     
+    private Long id;
     private String rutEmpleado;
     private String apellidos;
     private String nombres;
@@ -21,5 +22,9 @@ public class EmpleadoModel {
 
     public Date getFechaIngreso(){
         return fechaIngreso;
+    }
+
+    public Long getid(){
+        return id;
     }
 }

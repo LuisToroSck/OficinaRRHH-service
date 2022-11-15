@@ -15,14 +15,14 @@ public class OficinaRrhhService{
 
     RestTemplate restTemplate = new RestTemplate();
 
-    public double calcularSueldoFijoMensual(String rutEmpleado){
+    public double calcularSueldoFijoMensual(Long id){
 
 
         EmpleadoModel[] empleados = getEmpleados();
         int i = 0;
         String cat = new String();
         while (i < empleados.length){
-            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+            if(empleados[i].getid()==id){
                 cat = empleados[i].getCategoria(); 
             }
             i++;
@@ -43,15 +43,15 @@ public class OficinaRrhhService{
         return sueldoFijoMensual;
     }
 
-    public double calcularBonificacionPorAniosServicio(String rutEmpleado){
+    public double calcularBonificacionPorAniosServicio(Long id){
 
-        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
+        double sueldoFijoMensual = calcularSueldoFijoMensual(id);
 
         LocalDate localDate = LocalDate.now();
         EmpleadoModel[] empleados = getEmpleados();
         int i = 0;
         while(i < empleados.length){
-            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+            if(empleados[i].getid()==id){
                 localDate = empleados[i].getFechaIngreso().toLocalDate();
             }
             i = i + 1;
@@ -75,7 +75,7 @@ public class OficinaRrhhService{
         return Double.parseDouble(bonifStr);
     }
 
-    public double calcularPagoHorasExtras(String rutEmpleado){
+    public double calcularPagoHorasExtras(Long id){
 
         AutorizacionModel[] autorizaciones = getAutorizaciones();
 
@@ -83,7 +83,7 @@ public class OficinaRrhhService{
         EmpleadoModel empleado = new EmpleadoModel();
         int i = 0;
         while(i<empleados.length){
-            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+            if(empleados[i].getid()==id){
                 empleado = empleados[i];
             }
             i = i + 1;
@@ -111,10 +111,10 @@ public class OficinaRrhhService{
         return pagoHorasExtras;
     }
 
-    public double calcularDescuentoPorAtraso(String rutEmpleado){
+    public double calcularDescuentoPorAtraso(Long id){
 
-        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
-        List<Integer> atrasos = getAtrasos(rutEmpleado);
+        double sueldoFijoMensual = calcularSueldoFijoMensual(id);
+        List<Integer> atrasos = getAtrasos(id);
 
         double descuentoPorAtraso = 0;
 
@@ -123,16 +123,16 @@ public class OficinaRrhhService{
         return descuentoPorAtraso;
     }
 
-    public double calcularDescuentoPorInasistencia(String rutEmpleado){
+    public double calcularDescuentoPorInasistencia(Long id){
         
-        double sueldoFijoMensual = calcularSueldoFijoMensual(rutEmpleado);
+        double sueldoFijoMensual = calcularSueldoFijoMensual(id);
         JustificativoModel[] justificativos = getJustificativos();
         
         EmpleadoModel[] empleados = getEmpleados();
         EmpleadoModel empleado = new EmpleadoModel();
         int i = 0;
         while(i<empleados.length){
-            if(empleados[i].getRutEmpleado().equals(rutEmpleado)){
+            if(empleados[i].getid()==id){
                 empleado = empleados[i];
             }
             i = i + 1;
@@ -156,7 +156,6 @@ public class OficinaRrhhService{
         return descuentoPorInasistencia;
     }
 
-
     public EmpleadoModel[] getEmpleados(){
         EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8002/empleado", EmpleadoModel[].class);
         return empleados;
@@ -167,8 +166,8 @@ public class OficinaRrhhService{
         return autorizaciones;
     }
 
-    public List<Integer> getAtrasos(String rutEmpleado){
-        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8003/oficina/getAtrasos/" + rutEmpleado, List.class);
+    public List<Integer> getAtrasos(Long id){
+        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8003/datareloj/getAtrasos/" + id, List.class);
         return atrasos;
     }
 
