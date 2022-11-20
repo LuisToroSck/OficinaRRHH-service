@@ -1,0 +1,6 @@
+com\example\oficinarrhhservice\OficinarrhhServiceApplication.class
+com\example\oficinarrhhservice\controller\OficinaController.class
+com\example\oficinarrhhservice\model\EmpleadoModel.class
+com\example\oficinarrhhservice\model\JustificativoModel.class
+com\example\oficinarrhhservice\service\OficinaRrhhService.class
+com\example\oficinarrhhservice\model\AutorizacionModel.class
