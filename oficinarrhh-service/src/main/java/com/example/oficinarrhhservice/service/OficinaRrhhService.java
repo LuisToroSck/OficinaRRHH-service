@@ -157,22 +157,22 @@ public class OficinaRrhhService{
     }
 
     public EmpleadoModel[] getEmpleados(){
-        EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8002/empleado", EmpleadoModel[].class);
+        EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8082/empleado", EmpleadoModel[].class);
         return empleados;
     }
 
     public AutorizacionModel[] getAutorizaciones(){
-        AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://localhost:8001/autorizacion", AutorizacionModel[].class);
+        AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://localhost:8082/autorizacion", AutorizacionModel[].class);
         return autorizaciones;
     }
 
     public List<Integer> getAtrasos(Long id){
-        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8003/datareloj/getAtrasos/" + id, List.class);
+        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8082/datareloj/getAtrasos/" + id, List.class);
         return atrasos;
     }
 
     public JustificativoModel[] getJustificativos(){
-        JustificativoModel[] justificativos = restTemplate.getForObject("http://localhost:8004/justificativo", JustificativoModel[].class);
+        JustificativoModel[] justificativos = restTemplate.getForObject("http://localhost:8082/justificativo", JustificativoModel[].class);
         return justificativos;
     }
 
