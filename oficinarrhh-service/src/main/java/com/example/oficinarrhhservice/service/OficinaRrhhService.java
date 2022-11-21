@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -13,7 +14,8 @@ import com.example.oficinarrhhservice.model.*;
 @Service
 public class OficinaRrhhService{
 
-    RestTemplate restTemplate = new RestTemplate();
+    @Autowired
+    RestTemplate restTemplate;
 
     public double calcularSueldoFijoMensual(Long id){
 
@@ -157,22 +159,22 @@ public class OficinaRrhhService{
     }
 
     public EmpleadoModel[] getEmpleados(){
-        EmpleadoModel[] empleados = restTemplate.getForObject("http://localhost:8082/empleado", EmpleadoModel[].class);
+        EmpleadoModel[] empleados = restTemplate.getForObject("http://empleado-service/empleado", EmpleadoModel[].class);
         return empleados;
     }
 
     public AutorizacionModel[] getAutorizaciones(){
-        AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://localhost:8082/autorizacion", AutorizacionModel[].class);
+        AutorizacionModel[] autorizaciones = restTemplate.getForObject("http://autorizacion-service/autorizacion", AutorizacionModel[].class);
         return autorizaciones;
     }
 
     public List<Integer> getAtrasos(Long id){
-        List<Integer> atrasos = restTemplate.getForObject("http://localhost:8082/datareloj/getAtrasos/" + id, List.class);
+        List<Integer> atrasos = restTemplate.getForObject("http://datareloj-service/datareloj/getAtrasos/" + id, List.class);
         return atrasos;
     }
 
     public JustificativoModel[] getJustificativos(){
-        JustificativoModel[] justificativos = restTemplate.getForObject("http://localhost:8082/justificativo", JustificativoModel[].class);
+        JustificativoModel[] justificativos = restTemplate.getForObject("http://justificativo-service/justificativo", JustificativoModel[].class);
         return justificativos;
     }
 
